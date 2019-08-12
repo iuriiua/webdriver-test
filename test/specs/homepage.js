@@ -1,6 +1,8 @@
 import { assert } from 'chai';
 import exp from '../expected/homepage.exp';
 import sel from '../selector/homepage.sel';
+import help from '../helpers/helpers';
+import regSel from '../selector/register.sel';
 
 describe('Client', function () { //define suite title by passing a string
 
@@ -15,10 +17,17 @@ describe('Client', function () { //define suite title by passing a string
       let title = $(sel.siteName).getText();
       assert.equal(title, exp.tileVersion);
     })
-
-    it('Title and version', function () {
-      let title = $('#site-name').getText();
-      assert.equal(title, 'Progress Monitor 0.1.61');
-    })
     
+});
+
+describe('Elements Visible', function () {
+  help.elementsVisible(Object.values(sel));
+});
+
+describe('Functional', function () {
+  it(sel.createAccButton, function () {
+    $(sel.createAccButton).click();
+    let visible = $(regSel.h1).waitForDisplayed();
+    assert.isTrue(visible);
+  })
 });
